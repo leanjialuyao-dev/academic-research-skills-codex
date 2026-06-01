@@ -11,10 +11,11 @@ description: >
   study protocol support. Also use for Claude-style ARS command aliases such as
   /ars-plan, ars-plan, /ars-outline, /ars-abstract, /ars-lit-review,
   /ars-citation-check, /ars-disclosure, /ars-format-convert,
-  /ars-revision-coach, /ars-revision, and /ars-full. This skill vendors ARS
-  role prompts, references, templates, and shared handoff schemas under ars/.
+  /ars-revision-coach, /ars-revision, /ars-reviewer, /ars-mark-read,
+  /ars-unmark-read, and /ars-full. This skill vendors ARS role prompts,
+  references, templates, and shared handoff schemas under ars/.
 metadata:
-  version: "0.1.8"
+  version: "0.1.9"
   upstream_suite: "academic-research-skills"
   codex_adapter: true
 ---
@@ -26,7 +27,7 @@ This is a Codex adapter for the ARS suite. The vendored ARS content lives under
 
 ## Versioning
 
-This Codex package is version `0.1.8`. The repo-root `VERSION`, this
+This Codex package is version `0.1.9`. The repo-root `VERSION`, this
 `SKILL.md` metadata version, and `manifest.json` `adapter_version` must match.
 Vendored ARS suite versions are tracked separately by source repository commit
 in `manifest.json`.
@@ -116,6 +117,9 @@ uses the current model unless the user explicitly requests another model.
 | `/ars-format-convert`, `ars-format-convert` | `ars/commands/ars-format-convert.md` | `ars/academic-paper/WORKFLOW.md` in `format-convert` mode |
 | `/ars-revision-coach`, `ars-revision-coach` | `ars/commands/ars-revision-coach.md` | `ars/academic-paper/WORKFLOW.md` in `revision-coach` mode |
 | `/ars-revision`, `ars-revision` | `ars/commands/ars-revision.md` | `ars/academic-paper/WORKFLOW.md` in `revision` mode |
+| `/ars-reviewer`, `ars-reviewer` | `ars/commands/ars-reviewer.md` | `ars/academic-paper-reviewer/WORKFLOW.md` in `full` mode unless another reviewer mode is explicit |
+| `/ars-mark-read`, `ars-mark-read` | `ars/commands/ars-mark-read.md` | Mark one or more citation keys as human-read against the active Material Passport |
+| `/ars-unmark-read`, `ars-unmark-read` | `ars/commands/ars-unmark-read.md` | Rescind a prior human-read mark against the active Material Passport |
 | `/ars-full`, `ars-full` | `ars/commands/ars-full.md` | `ars/academic-pipeline/WORKFLOW.md` |
 
 If the request body after the alias is a vague topic, tentative title, research
@@ -171,7 +175,7 @@ from memory.
 `report_compiler_agent.md`, `research_architect_agent.md`,
 `research_question_agent.md`, `risk_of_bias_agent.md`,
 `socratic_mentor_agent.md`, `source_verification_agent.md`,
-`synthesis_agent.md`.
+`synthesis_agent.md`, `timeline_extraction_agent.md`.
 
 `ars/academic-paper/agents/`:
 `abstract_bilingual_agent.md`, `argument_builder_agent.md`,

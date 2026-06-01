@@ -4,7 +4,13 @@ All notable changes to the Codex package are documented here.
 
 ## Unreleased
 
+## [0.1.9] - 2026-06-01
+
 ### Changed
+- Vendored upstream ARS from `96b82e82142dc95f117595c207d3e150b078e411` (`v3.9.4.2`) to `4c38571798da4b1ed604ec2c1e01a6f66a7de5a7` (`v3.10.0` plus release-manifest alignment).
+- Added ARS v3.10 runtime content, including the triangulation policy layer, eval harness/gold sets, Schema 11 commitment-ledger refactor, domain-evidence/version-family updates, and scoped-write guard scripts.
+- Added newly vendored upstream `README.zh-CN.md`, `README.ja-JP.md`, `evals/`, `conftest.py`, and new `ars-*` command recipes.
+- Kept Codex-specific overlays: single root router skill, `WORKFLOW.md` vendored workflow entry files, Codex setup/architecture docs, nested-path lint patches, excluded showcase PDFs, and macOS Bash 3.2 audit wrapper compatibility.
 - Clarified beginner install instructions by using `python3` in command
   examples and documenting the `python` fallback when it points to Python 3.
 - Added community acknowledgements for beginner-install feedback and issue

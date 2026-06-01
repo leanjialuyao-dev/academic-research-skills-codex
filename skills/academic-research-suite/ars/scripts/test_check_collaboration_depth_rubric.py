@@ -224,7 +224,7 @@ class TestCollaborationDepthRubric(unittest.TestCase):
             self.assertEqual(r.returncode, 1)
             self.assertIn("dispatch anchor", r.stdout.lower())
 
-    def test_skill_md_without_nonblocking_phrase_fails(self) -> None:
+    def test_workflow_md_without_nonblocking_phrase_fails(self) -> None:
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
             _make_repo(root)

@@ -1,6 +1,6 @@
 # Academic Research Skills for Codex
 
-[![Version](https://img.shields.io/badge/version-v0.1.8-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-v0.1.9-blue)](VERSION)
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Sponsor](https://img.shields.io/badge/sponsor-Buy%20Me%20a%20Coffee-orange?logo=buy-me-a-coffee)](https://buymeacoffee.com/crucify020v)
 
@@ -44,7 +44,7 @@ Use this repo when you want the Codex-native single-suite skill.
 
 ## Versioning
 
-This Codex package is version `0.1.8`. The repo-root `VERSION` file,
+This Codex package is version `0.1.9`. The repo-root `VERSION` file,
 `skills/academic-research-suite/SKILL.md` metadata version, and
 `skills/academic-research-suite/manifest.json` `adapter_version` track the
 Codex package version independently of the vendored ARS suite. Vendored upstream
@@ -53,11 +53,12 @@ versions are recorded by commit in `manifest.source_repositories[]`.
 Package-level changes are summarized in [`CHANGELOG.md`](CHANGELOG.md).
 
 The vendored ARS source currently tracks
-`Imbad0202/academic-research-skills@96b82e82142dc95f117595c207d3e150b078e411`
-(`v3.9.4.2`). The v3.9.4.2 upstream delta is CI/release-gate-only under
-`.github/`, which this Codex package intentionally excludes; vendored runtime
-content includes ARS v3.9.4.1 temporal-verification hotfixes and the v3.9.1
-through v3.9.4 workflow updates.
+`Imbad0202/academic-research-skills@4c38571798da4b1ed604ec2c1e01a6f66a7de5a7`
+(`v3.10.0` plus the release-manifest alignment commit). Vendored runtime content
+includes the ARS v3.10 policy layer, eval harness/gold sets, Schema 11
+commitment-ledger refactor, and scoped-write guard scripts; Claude/plugin
+loader files under `.claude/`, `.claude-plugin/`, and `.github/` remain
+intentionally excluded.
 
 ## Install Or Update
 
@@ -160,6 +161,9 @@ ars-plan my paper on AI governance in universities.
 | `/ars-format-convert` | `ars-format-convert` | `academic-paper` `format-convert` mode |
 | `/ars-revision-coach` | `ars-revision-coach` | `academic-paper` `revision-coach` mode |
 | `/ars-revision` | `ars-revision` | `academic-paper` `revision` mode |
+| `/ars-reviewer` | `ars-reviewer` | `academic-paper-reviewer` full mode |
+| `/ars-mark-read` | `ars-mark-read` | Human-read signal for citation keys in the active Material Passport |
+| `/ars-unmark-read` | `ars-unmark-read` | Rescind a prior human-read signal |
 | `/ars-full` | `ars-full` | `academic-pipeline` full workflow |
 
 ### Working Pattern
@@ -271,10 +275,10 @@ ARS was originally written for Claude Code. In this Codex package:
 - If a citation, source, statistic, or journal policy cannot be verified, Codex
   should mark it as unverified rather than invent support.
 
-### ARS v3.9.4.2 Parity
+### ARS v3.10.0 Parity
 
 This package aims for the same user-facing workflow content as upstream ARS
-v3.9.4.2 where Codex has an equivalent concept.
+v3.10.0 where Codex has an equivalent concept.
 
 | Upstream ARS feature | Codex package behavior |
 |---|---|

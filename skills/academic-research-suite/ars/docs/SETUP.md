@@ -86,6 +86,9 @@ Use $academic-research-suite: ars-outline for this manuscript draft.
 | `/ars-format-convert` | `ars-format-convert` | `academic-paper` `format-convert` mode |
 | `/ars-revision-coach` | `ars-revision-coach` | `academic-paper` `revision-coach` mode |
 | `/ars-revision` | `ars-revision` | `academic-paper` `revision` mode |
+| `/ars-reviewer` | `ars-reviewer` | `academic-paper-reviewer` full mode |
+| `/ars-mark-read` | `ars-mark-read` | Human-read signal for citation keys in the active Material Passport |
+| `/ars-unmark-read` | `ars-unmark-read` | Rescind a prior human-read signal |
 | `/ars-full` | `ars-full` | `academic-pipeline` full workflow |
 
 The `model: opus` / `model: sonnet` fields in `commands/ars-*.md` are Claude

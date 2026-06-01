@@ -82,6 +82,9 @@ Use $academic-research-suite: ars-outline for this manuscript draft.
 | `/ars-format-convert` | `ars-format-convert` | `academic-paper` `format-convert` mode |
 | `/ars-revision-coach` | `ars-revision-coach` | `academic-paper` `revision-coach` mode |
 | `/ars-revision` | `ars-revision` | `academic-paper` `revision` mode |
+| `/ars-reviewer` | `ars-reviewer` | `academic-paper-reviewer` full mode |
+| `/ars-mark-read` | `ars-mark-read` | active Material Passport citation keys 的 human-read signal |
+| `/ars-unmark-read` | `ars-unmark-read` | 撤回先前的 human-read signal |
 | `/ars-full` | `ars-full` | `academic-pipeline` full workflow |
 
 `commands/ars-*.md` frontmatter 裡的 `model: opus` / `model: sonnet` 是
