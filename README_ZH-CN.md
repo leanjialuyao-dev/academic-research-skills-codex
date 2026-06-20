@@ -1,6 +1,6 @@
 # Academic Research Skills for Codex
 
-[![Version](https://img.shields.io/badge/version-v0.1.8-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-v0.1.13-blue)](VERSION)
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Sponsor](https://img.shields.io/badge/sponsor-Buy%20Me%20a%20Coffee-orange?logo=buy-me-a-coffee)](https://buymeacoffee.com/crucify020v)
 
@@ -40,13 +40,15 @@ skills/academic-research-suite/
 
 ## 版本管理
 
-本 Codex 打包版本为 `0.1.8`。repo 根目录的 `VERSION` 文件、`skills/academic-research-suite/SKILL.md` 中的元数据版本，以及 `skills/academic-research-suite/manifest.json` 中的 `adapter_version` 独立追踪 Codex 打包版本，与内嵌的 ARS 套件版本无关。内嵌的上游版本通过 commit 记录在 `manifest.source_repositories[]` 中。
+本 Codex 打包版本为 `0.1.13`。repo 根目录的 `VERSION` 文件、`skills/academic-research-suite/SKILL.md` 中的元数据版本，以及 `skills/academic-research-suite/manifest.json` 中的 `adapter_version` 独立追踪 Codex 打包版本，与内嵌的 ARS 套件版本无关。内嵌的上游版本通过 commit 记录在 `manifest.source_repositories[]` 中。
 
 打包层面的变更汇总在 [`CHANGELOG.md`](CHANGELOG.md) 中。
 
 当前内嵌的 ARS 源码追踪至
-`Imbad0202/academic-research-skills@96b82e82142dc95f117595c207d3e150b078e411`
-（`v3.9.4.2`）。v3.9.4.2 上游差异仅涉及 `.github/` 下的 CI/release-gate 相关内容，本 Codex 打包版本刻意将其排除；内嵌的运行时内容包含 ARS v3.9.4.1 时间验证热修复以及 v3.9.1 至 v3.9.4 的 workflow 更新。
+`Imbad0202/academic-research-skills@c22c17eed8a5753aa60681be9734919f2e2f5b42`
+（`v3.13.0-2-gc22c17e`）。内嵌的运行时内容包含 ARS v3.13
+hook portability、provider-agnostic verification、guard-correctness 更新、
+v3.12.1 审稿回复分流模式、format-profile 支持，以及 diff/patch revision 工具链。
 
 ## 安装或更新
 
@@ -217,13 +219,13 @@ ARS 最初是为 Claude Code 编写的。在本 Codex 打包版本中：
 - 内嵌的 `hooks/hooks.json` 文件仅为上游可追溯性而保留。Codex 不会从此包安装 Claude Code hook。
 - Codex 不会自动生成后台 agent，除非你明确要求委派或并行 agent 工作。
 - Web/源码验证使用 Codex 浏览功能，在涉及当前或外部事实时必须引用来源。
-- 跨模型验证默认禁用。在本 Codex 打包版本中明确请求时，需配置 `ARS_CROSS_MODEL=claude-opus-4.7` 和 `ANTHROPIC_API_KEY`；外部审阅者使用 Anthropic Claude Opus 4.7 API，而非 Codex/OpenAI API。上游的 GPT/Gemini 二次调度指令在未配置此显式 Anthropic 设置时将被忽略。
+- 跨模型验证默认禁用。在本 Codex 打包版本中明确请求时，请按 `ars/shared/cross_model_verification.md` 配置 provider，先说明 provider、model 和将发送的内容类别，并在任何外部上传前取得用户明确同意。外部审阅者通过已配置的 provider API 调用，不会用当前 Codex model 模拟。
 - 上游对"新 Claude Code 会话"的引用在本包中等同于新的 Codex 对话；Material Passport 重置语义仍然适用。
 - 如果引用、来源、统计数据或期刊政策无法验证，Codex 应将其标记为未验证，而非编造支撑依据。
 
-### ARS v3.9.4.2 功能对等
+### ARS v3.13 Mainline 功能对等
 
-本包旨在 Codex 具有等效概念的地方，提供与上游 ARS v3.9.4.2 相同的用户侧 workflow 内容。
+本包旨在 Codex 具有等效概念的地方，提供与上游 ARS `v3.13.0-2-gc22c17e` 相同的用户侧 workflow 内容。
 
 | 上游 ARS 功能 | Codex 打包版本行为 |
 |---|---|
@@ -235,18 +237,19 @@ ARS 最初是为 Claude Code 编写的。在本 Codex 打包版本中：
 | SessionStart 和 SubagentStop hook | 仅为可追溯性而内嵌保留；Codex 不安装或执行 Claude hook |
 | Plugin 市场更新 / 自动更新 | 此处不可用；通过重新安装或拉取此 Codex repo 进行更新 |
 | Claude Code Agent Team | 非自动；Codex 子 agent 需要用户明确请求委派或并行 agent |
-| 上游文档中的跨模型 GPT/Gemini 调度 | 已禁用；Codex 打包版本仅在明确配置时支持可选的 Anthropic Claude Opus 4.7 审阅 |
+| 上游文档中的跨模型 provider 调度 | 默认禁用；仅在明确配置 provider 并取得用户同意时可用 |
 
-### 可选的 Claude Opus 4.7 审阅者 API
+### 可选的外部跨模型审阅者 API
 
-用于审阅者校准或跨模型"魔鬼代言人"检查：
+用于审阅者校准或跨模型"魔鬼代言人"检查时，请按
+`ars/shared/cross_model_verification.md` 配置其中一组 provider，例如：
 
 ```bash
-export ANTHROPIC_API_KEY="<your-anthropic-api-key>"
-export ARS_CROSS_MODEL="claude-opus-4.7"
+export OPENAI_API_KEY="<your-openai-api-key>"
+export ARS_CROSS_MODEL="gpt-5.5"
 ```
 
-然后在提示词中明确请求跨模型验证。如果未同时设置这两个环境变量，ARS Codex 将回退到单运行时审阅，并报告 Claude Opus 4.7 验证者不可用。
+然后在提示词中明确请求跨模型验证。如果未配置 provider 或未取得要发送内容类别的明确同意，ARS Codex 将回退到单运行时审阅，并报告跨模型验证不可用。
 
 ## 支持与赞助
 
@@ -281,7 +284,7 @@ skills/academic-research-suite/ars/shared/
 ## 更新策略
 
 更新会将选定的上游 ARS 内容同步到 `skills/academic-research-suite/ars/`。
-不要盲目镜像 Claude Code repo；应排除 Claude/plugin 加载器文件，如 `.claude/`、`.claude-plugin/`、`.github/`、源码 `.gitignore`，以及 Codex 中不需要的纯符号链接别名目录。
+不要盲目镜像 Claude Code repo；应排除 Claude/plugin 加载器文件，如 `.claude/`、`.claude-plugin/`、源码 `.gitignore`，以及 Codex 中不需要的纯符号链接别名目录。可保留嵌套的上游 `.github/` workflow 作为非活跃 traceability 和自测 fixture。
 
 ### 非活跃的上游脚本
 

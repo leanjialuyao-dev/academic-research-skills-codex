@@ -1,6 +1,6 @@
 # Academic Research Skills for Codex
 
-[![Version](https://img.shields.io/badge/version-v0.1.8-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-v0.1.13-blue)](VERSION)
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Sponsor](https://img.shields.io/badge/sponsor-Buy%20Me%20a%20Coffee-orange?logo=buy-me-a-coffee)](https://buymeacoffee.com/crucify020v)
 
@@ -42,7 +42,7 @@ skills/academic-research-suite/
 
 ## 版本控制
 
-此 Codex 套件版本為 `0.1.8`。倉庫根目錄的 `VERSION` 檔案、
+此 Codex 套件版本為 `0.1.13`。倉庫根目錄的 `VERSION` 檔案、
 `skills/academic-research-suite/SKILL.md` 的 metadata 版本，
 以及 `skills/academic-research-suite/manifest.json` 的 `adapter_version`
 獨立追蹤 Codex 套件版本，與內嵌的 ARS 套件版本分開管理。
@@ -51,10 +51,10 @@ skills/academic-research-suite/
 套件層級的變更摘要記錄在 [`CHANGELOG.md`](CHANGELOG.md) 中。
 
 目前內嵌的 ARS 原始碼追蹤至
-`Imbad0202/academic-research-skills@96b82e82142dc95f117595c207d3e150b078e411`
-（`v3.9.4.2`）。v3.9.4.2 上游的差異僅為 `.github/` 下的 CI/release-gate 變更，
-本 Codex 套件刻意排除這些內容；內嵌的執行時期內容包含 ARS v3.9.4.1 的
-temporal-verification 修補程式以及 v3.9.1 至 v3.9.4 的 workflow 更新。
+`Imbad0202/academic-research-skills@c22c17eed8a5753aa60681be9734919f2e2f5b42`
+（`v3.13.0-2-gc22c17e`）。內嵌的執行時期內容包含 ARS v3.13
+hook portability、provider-agnostic verification、guard-correctness 更新、
+v3.12.1 審稿回覆分流模式、format-profile 支援，以及 diff/patch revision 工具鏈。
 
 ## 安裝與更新
 
@@ -242,17 +242,17 @@ ARS 最初是為 Claude Code 撰寫的。在此 Codex 套件中：
 - 除非您明確要求委派或平行 agent 工作，否則 Codex 不會自動生成背景 agent。
 - 網頁/來源驗證使用 Codex 瀏覽功能，在涉及即時或外部事實時必須引用來源。
 - 跨模型驗證預設為停用。在此 Codex 套件中明確要求時，
-  請設定 `ARS_CROSS_MODEL=claude-opus-4.7` 和 `ANTHROPIC_API_KEY`；
-  外部審查者使用 Anthropic Claude Opus 4.7 API，而非 Codex/OpenAI API。
-  上游的 GPT/Gemini 二次分派指令在此明確的 Anthropic 設定存在時才會被忽略。
+  請依 `ars/shared/cross_model_verification.md` 設定 provider，先說明
+  provider、model 與會送出的內容類別，並在任何外部上傳前取得使用者明確同意。
+  外部審查者透過已設定的 provider API 呼叫，不會用目前的 Codex model 模擬。
 - 上游提及「fresh Claude Code session」在本套件中意指新的 Codex 對話；
   Material Passport 重設語意仍然適用。
 - 如果引用、來源、統計數據或期刊政策無法驗證，Codex 應將其標記為未驗證，
   而非虛構支持內容。
 
-### ARS v3.9.4.2 功能對等
+### ARS v3.13 Mainline 功能對等
 
-本套件旨在與上游 ARS v3.9.4.2 在 Codex 具有對等概念之處，
+本套件旨在與上游 ARS `v3.13.0-2-gc22c17e` 在 Codex 具有對等概念之處，
 提供相同的使用者面向 workflow 內容。
 
 | 上游 ARS 功能 | Codex 套件行為 |
@@ -265,19 +265,20 @@ ARS 最初是為 Claude Code 撰寫的。在此 Codex 套件中：
 | SessionStart 和 SubagentStop hooks | 僅為可追溯性而保留；Codex 不安裝或執行 Claude hooks |
 | Plugin marketplace 更新/自動更新 | 此處不提供；透過重新安裝或拉取本 Codex repo 來更新 |
 | Claude Code Agent Team | 非自動；Codex 子 agent 需要使用者明確要求委派或平行 agent |
-| 上游文件中的跨模型 GPT/Gemini 分派 | 已停用；Codex 套件僅在明確設定時支援選用的 Anthropic Claude Opus 4.7 審查 |
+| 上游文件中的跨模型 provider 分派 | 預設停用；只有在明確設定 provider 並取得使用者同意時才可使用 |
 
-### 選用的 Claude Opus 4.7 審查者 API
+### 選用的外部跨模型審查者 API
 
-用於審查者校準或跨模型魔鬼代言人檢查：
+用於審查者校準或跨模型魔鬼代言人檢查時，請依
+`ars/shared/cross_model_verification.md` 設定其中一組 provider，例如：
 
 ```bash
-export ANTHROPIC_API_KEY="<your-anthropic-api-key>"
-export ARS_CROSS_MODEL="claude-opus-4.7"
+export OPENAI_API_KEY="<your-openai-api-key>"
+export ARS_CROSS_MODEL="gpt-5.5"
 ```
 
-然後在提示中明確要求跨模型驗證。若未同時設定兩個環境變數，
-ARS Codex 將回退至單一執行時期審查，並應報告 Claude Opus 4.7 驗證器不可用。
+然後在提示中明確要求跨模型驗證。若未設定 provider 或未取得要送出內容類別的
+明確同意，ARS Codex 將回退至單一執行時期審查，並應報告跨模型驗證不可用。
 
 ## 支持與贊助
 
@@ -317,8 +318,9 @@ skills/academic-research-suite/ars/shared/
 
 更新會將精選的上游 ARS 內容同步至 `skills/academic-research-suite/ars/`。
 請勿盲目鏡像 Claude Code repo；應排除 Claude/plugin 載入器檔案，
-例如 `.claude/`、`.claude-plugin/`、`.github/`、原始 `.gitignore`，
-以及 Codex 中不需要的僅符號連結別名目錄。
+例如 `.claude/`、`.claude-plugin/`、原始 `.gitignore`，以及 Codex
+中不需要的僅符號連結別名目錄。可保留巢狀的上游 `.github/` workflow
+作為非活躍 traceability 與自測 fixture。
 
 ### 非活躍的上游腳本
 

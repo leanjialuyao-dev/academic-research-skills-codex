@@ -83,6 +83,8 @@ def check_manifest() -> list[str]:
         "ars-mark-read",
         "ars-unmark-read",
         "ars-cache-invalidate",
+        "ars-3w",
+        "ars-rebuttal-audit",
         "ars-full",
         "ars-plan",
         "ars-lit-review",
