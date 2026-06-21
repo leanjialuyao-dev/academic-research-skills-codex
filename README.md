@@ -1,6 +1,6 @@
 # Academic Research Skills for Codex
 
-[![Version](https://img.shields.io/badge/version-v0.1.13-blue)](VERSION)
+[![Version](https://img.shields.io/badge/version-v0.1.14-blue)](VERSION)
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Sponsor](https://img.shields.io/badge/sponsor-Buy%20Me%20a%20Coffee-orange?logo=buy-me-a-coffee)](https://buymeacoffee.com/crucify020v)
 
@@ -49,7 +49,7 @@ Use this repo when you want the Codex-native single-suite skill.
 
 ## Versioning
 
-This Codex package is version `0.1.13`. The repo-root `VERSION` file,
+This Codex package is version `0.1.14`. The repo-root `VERSION` file,
 `skills/academic-research-suite/SKILL.md` metadata version, and
 `skills/academic-research-suite/manifest.json` `adapter_version` track the
 Codex package version independently of the vendored ARS suite. Vendored upstream
@@ -118,9 +118,10 @@ Plugin: academic-research-skills
 ```
 
 The plugin root lives at `plugins/academic-research-skills/`. Its `skills/`
-entry links back to the repository's existing `skills/` tree, so the plugin
-install and the direct skill install share the same ARS source files instead of
-maintaining a duplicated `plugin/` copy.
+directory contains a materialized copy of `academic-research-suite`, not a
+symlink. This keeps Codex Desktop installs portable on Windows, where plugin
+caches may materialize symlinks as plain text files and skip bundled skill
+registration.
 
 ## Codex Docs
 

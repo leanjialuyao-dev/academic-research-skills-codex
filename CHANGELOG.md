@@ -4,6 +4,15 @@ All notable changes to the Codex package are documented here.
 
 ## Unreleased
 
+## [0.1.14] - 2026-06-21
+
+### Fixed
+- Replaced the Codex Desktop plugin's `skills` symlink with a materialized
+  bundled `skills/academic-research-suite` directory so Windows plugin caches
+  register the bundled skill reliably.
+- Added a package quality gate that fails if the Desktop plugin bundle reverts
+  to symlink-based skill packaging.
+
 ## [0.1.13] - 2026-06-20
 
 ### What's Changed
